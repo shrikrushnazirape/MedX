@@ -132,15 +132,15 @@ def doctord(request):
     if request.user.is_authenticated and request.user.is_staff:
         d_obj = Doctor.objects.get(user = request.user)
         pre_obj = Prescription.objects.filter(doctor_id = d_obj)
-        t_data = {}
+        t_data= {}
         for item in pre_obj:
-            med = Medecine.objects.filter(prescription=pre_obj)
-            t_data[item.pk] = med
+            meditem = Medecine.objects.filter(prescription = item)      
+            t_data[item] = meditem
         data = {
             'd_obj':d_obj,
             'pre_obj':pre_obj,
-         
             't_data':t_data
+         
         }
         return render(request, ddash, data)
 

@@ -54,7 +54,8 @@
                         <p class="intro">{{key.note}}</p>
                         <h2>medicine</h2>
                         {% for val in value %}
-                       <p> {{val}} </b> 
+                       <p> {{val.med_name}} -- QTY : {{val.qty}} -- (dose :  {{val.dose}})</p> 
+                    
                        <br>
                         {% endfor %}
                        
