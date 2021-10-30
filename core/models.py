@@ -45,14 +45,13 @@ class Prescription(models.Model):
     status = models.BooleanField(default=False);
 
 
-    def __str__(self):
-        return self.presc_id;
 
 
 class Medecine(models.Model):
     med_name = models.CharField(max_length=50, blank=True, null=True)
     qty = models.IntegerField(blank= True, null= True)
     prescription = models.ForeignKey(Prescription, on_delete=CASCADE)
+    dose = models.CharField(blank=True, null=True, default="",max_length=100)
 
     def __str__(self):
         return self.med_name

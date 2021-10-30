@@ -23,14 +23,11 @@ def signin(request):
         password = data['password']
         
         user = authenticate(request, username=username, password=password)
-      
         if user:
             if (user.is_staff):
-               
-                #this user is a doctor
-                doctor = Doctor.objects.get(user=user)
+
                 auth.login(request, user)
-                print("testing one")
+            
                 return redirect("ddash")
             else:
                 
@@ -132,7 +129,7 @@ def signupp(request):
 
 def doctord(request):
     ddash = 'doctor_dashboard.html'
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_staff:
         d_obj = Doctor.objects.get(user = request.user)
         pre_obj = Prescription.objects.filter(doctor_id = d_obj)
         t_data = {}
@@ -146,6 +143,7 @@ def doctord(request):
             't_data':t_data
         }
         return render(request, ddash, data)
+
     return redirect('login')
    
 
@@ -154,20 +152,26 @@ def patientd(request):
     pdash = 'patient_dashboard.html'
     print(request.user.is_authenticated)
     if request.user.is_authenticated:
-        print("authenticated")
+      
         p_obj = Patient.objects.get(user = request.user)
+      
         pre_obj = Prescription.objects.filter(patient_id = p_obj)
-        t_data = {}
+        
+        t_data= {}
         for item in pre_obj:
-            med = Medecine.objects.filter(prescription=pre_obj)
-            t_data[item.pk] = med
-
+            meditem = Medecine.objects.filter(prescription = item)      
+            t_data[item] = meditem
+               
+        
         data = {
             'p_obj':p_obj,
             'pre_obj':pre_obj,
-            
             't_data':t_data
+         
         }
+        for item in t_data:
+            print (t_data[item])
+
         return render(request, pdash, data)
     print("Not authen")
     return redirect('login')
@@ -178,3 +182,18 @@ def signout(request):
         return HttpResponse("logouted successfully")
     except:
        return HttpResponse("Need to Login First")
+
+
+def new(request):
+    return render(request, 'new_presc.html')
+
+def getp(request):
+    return JsonResponse("hello", 200)
+    print("reques")
+    pid = request.POST['pid']
+    p_obj = Patient.objects.get(patient_id=pid)
+    return render(request, 'pdetail.html', {'pobj':p_obj })
+    # if p_obj:
+        
+    # print("invlaid")
+    # return HttpResponse("invalid Patient ID")

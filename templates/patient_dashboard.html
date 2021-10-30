@@ -18,17 +18,17 @@
                     <img id="picpic" src="{% static 'imgs/profile1.jpeg' %}" alt="Profile Pic">
                     <div>
                         <h1>John Adam</h1>
-                        <p class="title">{{patient.patient_id }}</p>
+                        <p class="title">Patient ID : {{p_obj.patient_id }}</p>
                     </div>
                 </div>
                 <div class="basic_details">
-                    <p class="intro">I am senior year computer science student who love to code.I am also an open source
-                        contributor. science student who love to code.I am also an open source</p>
+             
                     <p>Height: {{p_obj.height}}</p>
                     <p>weight: {{p_obj.weight}}</p>
                     <p>DOB : {{p_obj.dob}}</p>
                     <p>Blood Gorup: {{p_obj.bloodgroup}} </p>
                     <p>Contact No.: {{p_obj.contact }}</p>
+                    <p>Pre. Medical History:  {{p_obj.pre_med_hist }}</p>
                 </div>
 
             </div>
@@ -43,39 +43,32 @@
 
 
             <div class="pres_container">
-                <div class="presc_card">
+               
+
+                  {% for key,value in t_data.items %}  
+                 
+                   <div class="presc_card">
 
                     <div class="basic_details">
-                        <p>Date: 05/12/2020</p>
-                        <p class="intro">he is affected by fever and it is curable, he will need to take rest for 2 to 4
-                            days
-                            and avoid the oily food and junk food.</p>
+                        <p>Date: {{key.date}}</p>
+                        <p class="intro">{{key.note}}</p>
                         <h2>medicine</h2>
-                        <p>coldamine :6 (2 times per day) </p>
-                        <p>hyaluronate: 6 (2 times per day) </p>
-                        <p>ophthalmic : 9 (3 times per day)</p>
-                        <p>resync: 3 (1 per day)</p>
-
+                        {% for val in value %}
+                       <p> {{val}} </b> 
+                       <br>
+                        {% endfor %}
+                       
+                   
                     </div>
+                   </div>
 
-                </div>
+                  {% endfor %}
 
-                <div class="presc_card">
+              
 
-                    <div class="basic_details">
-                        <p>Date: 05/12/2020</p>
-                        <p class="intro">he is affected by fever and it is curable, he will need to take rest for 2 to 4
-                            days
-                            and avoid the oily food and junk food.</p>
-                        <h2>medicine</h2>
-                        <p>coldamine :6 (2 times per day) </p>
-                        <p>hyaluronate: 6 (2 times per day) </p>
-                        <p>ophthalmic : 9 (3 times per day)</p>
-                        <p>resync: 3 (1 per day)</p>
 
-                    </div>
 
-                </div>
+
             </div>
         </div>
 
