@@ -9,5 +9,6 @@ urlpatterns = [
     path('doctor/', views.doctord, name='ddash'),
     path('patient/', views.patientd, name='pdash'),
     path('new/', views.new, name='new'),
-    path('getp/', views.getp, name='getp')
+    path('entry/', views.entry, name='entry'),
+ 
 ]

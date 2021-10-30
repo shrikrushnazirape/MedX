@@ -187,13 +187,13 @@ def signout(request):
 def new(request):
     return render(request, 'new_presc.html')
 
-def getp(request):
-    return JsonResponse("hello", 200)
-    print("reques")
-    pid = request.POST['pid']
-    p_obj = Patient.objects.get(patient_id=pid)
-    return render(request, 'pdetail.html', {'pobj':p_obj })
-    # if p_obj:
+def entry(request):
+    if(request.method == 'POST'):
+        data = request.POST
+        myd = request.POST.get('datamain')
         
-    # print("invlaid")
-    # return HttpResponse("invalid Patient ID")
+        print(data['datamain'])
+        return JsonResponse({"success": "Milestone successfully created"},status=200)
+    return JsonResponse({"error": "get request"},status=200)
+
+

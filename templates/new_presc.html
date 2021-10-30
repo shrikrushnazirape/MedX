@@ -20,17 +20,7 @@
       {{msg}}
     </div>
     {% endif %}
-  <form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit"
-    class="btn btn-danger" style="  
-   margin-top: 1px;
-   margin-right: 2px;
-   position:absolute;
-   top:0;
-   right:0;"
-    >Logout</button>
-  </form>
+ 
   <div class="container-fluid">
     <div class="row main-row">
         <div class="col-12 col-md-6 imgdiv">
@@ -48,38 +38,33 @@
                 >
                     <label for="pid" >Patient ID : </label>
                   <input type="text" placeholder="Enter the patient id" name="pid" class="form-control" id="pid" aria-describedby="emailHelp">
-                  <button class="btn btn-warning mb-2" s>
-                    Get Patient Details 
-                </button>
+           
                 </div>
-               
-          
+             
 
+                <button type="button" class="addService btn btn-warning">Add</button>
+                <table class="table " id="tabx"> 
+                  <thead>
+                    <tr>
+                     
+                      <th scope="col">Name </th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Dose</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tbd">
+                    <tr class="item">
+                      <td><input type="text" id="med" name='val1'></td>
+                      <td><input type="text" id="qty" name='val2'></td>
+                      <td><input type="text" id="dose" name='val3'></td>
+                    </tr>
+                 
 
-              
-              <div class="mb-3">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" name="age" class="form-control" id="age" aria-describedby="emailHelp">
-              </div>
-              <div class="mb-3">
-                <label for="weight" class="form-label">Weight</label>
-                <input type="number" name="weight" class="form-control" id="weight" aria-describedby="emailHelp">
-              </div>
-              <div class="mb-3">
-                <label for="height" class="form-label">height</label>
-                <input type="number" name="height" class="form-control" id="height" aria-describedby="emailHelp">
-              </div>
-              {{doctors_list}}
-              <label for="doc">Choose doctor</label>
-              <select  name="doctor_selected" id="doc" placeholder="Pick a Doctor...">
-                <option value="">Select a state...</option>
-                {%for doctor in speciality_list %}
-                  <option value="{{doctor}}">{{doctor}}</option>
-                {% endfor %}
-              </select>
-
+                    
+                  </tbody>
+                </table>
    
-              <button type="submit" class="btn btn-primary">Send to Doctor</button>
+              <button type="button" id="sub" class="btn btn-primary" >Send to Doctor</button>
             </form>
           </div>
         </div>
@@ -88,12 +73,89 @@
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
+
+
+
+function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+
     
         $(document).ready(function () {
       $('select').selectize({
           sortField: 'text'
       });
   });
+
+
+
+  $(document).ready(function() {
+ 
+  $('.addService').on('click', function() {
+    var field = '<tr class="item"><td><input type="text" id="med" name="val1"></td><td><input type="text" id="qty" name="val2"></td><td><input type="text" id="dose" name="val3"></td></tr>';
+    $('.tbd').append(field);
+  
+  })
+})
+
+
+  $('#sub').on('click', function() {
+
+    datamain=[]
+
+    var data = $('.item').map(function() {
+   
+      
+        item = {};
+        var id = $(this).find('[name="val1"]').val();
+        var qt= $(this).find('[name="val2"]').val();
+        var dose= $(this).find('[name="val3"]').val();
+        item['med'] = id;
+        item['qty'] = qt;
+        item['dose'] = dose;
+        datamain.push(item);
+    
+   
+});
+var jsonString = JSON.stringify(datamain);
+console.log(datamain);
+var csrf_token = getCookie('csrftoken');
+$.ajax(
+  {
+  type:"POST",
+  
+  url: "{% url 'entry' %}",
+  
+  data:{
+      datamain : JSON.stringify(datamain),
+      csrfmiddlewaretoken: csrf_token
+  },
+  success: function(data){
+      alert(data["success"])
+  },
+  error:function(response){
+  console.log(response)
+   alert(response.responseJSON.error);
+  }
+  }
+  )
+
+
+  });
+
 
   </script>
   </body>
