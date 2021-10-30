@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <div class="dashbord_container">
+            <div class="profile_card">
+                <div class="profileimg">
+                    <img id="picpic" src="{% static 'imgs/profile1.jpeg' %}" alt="Profile Pic">
+                    <div>
+                        <h1>John Adam</h1>
+                        <p class="title">{{patient.patient_id }}</p>
+                    </div>
+                </div>
+                <div class="basic_details">
+                    <p class="intro">I am senior year computer science student who love to code.I am also an open source
+                        contributor. science student who love to code.I am also an open source</p>
+                    <p>Height: {{p_obj.height}}</p>
+                    <p>weight: {{p_obj.weight}}</p>
+                    <p>DOB : {{p_obj.dob}}</p>
+                    <p>Blood Gorup: {{p_obj.bloodgroup}} </p>
+                    <p>Contact No.: {{p_obj.contact }}</p>
+                </div>
+
+            </div>
+            <div class="hide_on_mob">
+                <img src="{% static 'imgs/37450-pharmacist-will-call-medical-animation.gif' %}" />
+            </div>
+        </div>
+        <div class="dashbord_container">
+            <div class="hide_on_mob">
+                <img src="{% static 'imgs/18469-stay-safe.gif' %}" />
+            </div>
+
+
+            <div class="pres_container">
+                <div class="presc_card">
+
+                    <div class="basic_details">
+                        <p>Date: 05/12/2020</p>
+                        <p class="intro">he is affected by fever and it is curable, he will need to take rest for 2 to 4
+                            days
+                            and avoid the oily food and junk food.</p>
+                        <h2>medicine</h2>
+                        <p>coldamine :6 (2 times per day) </p>
+                        <p>hyaluronate: 6 (2 times per day) </p>
+                        <p>ophthalmic : 9 (3 times per day)</p>
+                        <p>resync: 3 (1 per day)</p>
+
+                    </div>
+
+                </div>
+
+                <div class="presc_card">
+
+                    <div class="basic_details">
+                        <p>Date: 05/12/2020</p>
+                        <p class="intro">he is affected by fever and it is curable, he will need to take rest for 2 to 4
+                            days
+                            and avoid the oily food and junk food.</p>
+                        <h2>medicine</h2>
+                        <p>coldamine :6 (2 times per day) </p>
+                        <p>hyaluronate: 6 (2 times per day) </p>
+                        <p>ophthalmic : 9 (3 times per day)</p>
+                        <p>resync: 3 (1 per day)</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</body>
+
+</html>

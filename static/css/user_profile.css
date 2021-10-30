@@ -1,0 +1,90 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.dashbord_container {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  background-color: white;
+}
+.profile_card {
+  width: 46vw;
+  margin: 2vw;
+  background-color: rgb(238, 248, 248);
+  border-radius: 1vw;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  border: 1px solid #6c9fa6;
+}
+.hide_on_mob {
+  width: 50vw;
+  display: flex;
+  justify-content: space-evenly;
+}
+.hide_on_mob img {
+  width: 100%;
+}
+.profileimg {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.profileimg img {
+  max-height: 30%;
+  max-width: 30%;
+  border-radius: 50%;
+  border: 1px solid #6c9fa6;
+}
+.profileimg div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.basic_details {
+  padding: 2vw;
+}
+.pres_container {
+  width: 100%;
+}
+.presc_card {
+  width: 46vw;
+  margin-left: auto;
+  margin-right: 2vw;
+  margin-bottom: 1vw;
+  background-color: rgb(238, 248, 248);
+  border-radius: 1vw;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  border: 1px solid #6c9fa6;
+}
+
+@media only screen and (max-width: 768px) {
+  .profile_card {
+    width: 92vw;
+    margin: 4vw;
+  }
+  .profileimg {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .profileimg img {
+    max-height: 60%;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .profileimg div {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hide_on_mob {
+    display: none;
+  }
+  .presc_card {
+    width: 92vw;
+    margin: 4vw;
+  }
+}
