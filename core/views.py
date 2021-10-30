@@ -2,17 +2,16 @@ from django.shortcuts import render
 from django.shortcuts import render, HttpResponse, redirect
 # Create your views here.
 def signin(request):
-    return HttpResponse("Login page")
+    return render(request, 'login.html')
 
 def signupd(request):
-    return HttpResponse("doctor signup page")
+    return render(request, 'doctor_signup.html')
     
-
 def signupp(request):
-    return HttpResponse("patient signup page")
+    return render(request, 'patient_signup.html')
 
 def doctord(request):
-    return HttpResponse("doctor dashbaord")
+    return render(request, 'doctor_dashboard.html')
 
 def patientd(request):
-    return HttpResponse("patient dashbaord")
+    return render(request, 'patient_dashboard.html')
