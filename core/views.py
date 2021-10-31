@@ -76,7 +76,7 @@ def signupd(request):
             user1.is_staff = True
             user1.save()
             auth.login(request, user1)
-            return redirect('doctor_dashboard')
+            return redirect('ddash')
         except Exception as e:
             return render(request, register_doctor, {'msg': [f'User already exists..!!{e}']})
             
@@ -122,7 +122,7 @@ def signupp(request):
                 )
             user1.save()
             auth.login(request, user1)
-            return redirect('patient_dashboard')
+            return redirect('pdash')
         except Exception as e:
             return render(request, register_patient, {'msg': [f'User already exists..!!{e}']})
   
