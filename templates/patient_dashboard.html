@@ -11,7 +11,12 @@
 </head>
 
 <body>
+    {% include "navbar2.html" %}
+    <br> <br>
     <div>
+        <h2 style="text-align: center; margin-bottom: 30px;">
+            Patient Dashboard
+        </h2>
         <div class="dashbord_container">
             <div class="profile_card">
                 <div class="profileimg">
@@ -32,16 +37,44 @@
                 </div>
 
             </div>
-            <div class="hide_on_mob">
+            <div class="pres_container">
+            
+                {% for key,value in t_data.items %}  
+               
+                 <div class="presc_card">
+                  <div class="basic_details">
+                      <p>Prescription ID : {{key.pk}}</p>
+                      <p>Date: {{key.date}}</p>
+                      <p class="intro">{{key.note}}</p>
+                      <h2>medicine</h2>
+                      {% for val in value %}
+                     <p> {{val.med_name}} -- QTY : {{val.qty}} -- (dose :  {{val.dose}})</p> 
+                     <br>
+                      {% endfor %}
+                     
+                 
+                  </div>
+                 </div>
+
+                {% endfor %}
+
+            
+
+
+
+
+          </div>
+            <!-- <div class="hide_on_mob">
                 <img src="{% static 'imgs/37450-pharmacist-will-call-medical-animation.gif' %}" />
-            </div>
+            </div> -->
         </div>
+
         <div class="dashbord_container">
-            <div class="hide_on_mob">
+            <!-- <div class="hide_on_mob">
                 <img src="{% static 'imgs/18469-stay-safe.gif' %}" />
-            </div>
+            </div> -->
 
-
+<!-- 
             <div class="pres_container">
                
 
@@ -70,7 +103,7 @@
 
 
 
-            </div>
+            </div> -->
         </div>
 
     </div>

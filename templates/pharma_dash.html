@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Pharma Dashboard</title>
+  </head>
+ 
+
+
+<style>
+    .main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    form{
+        border: 2px solid black;
+        padding: 100px;
+        width: 60vw;
+        margin-top: -100px;
+       
+      
+     
+    }
+</style>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'imgs/logo.jpg' %}" width="50" height="30" class="d-inline-block align-top" alt="">
+                medX
+              </a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'pharma' %}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-item nav-link" href="{% url 'logout' %}"><button class="btn btn-danger btn-sm">Logout</button></a>
+              </li>
+           
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+
+    <h2 style="text-align: center;">Pharma Dashboard</h2>
+    <div class="main">
+      
+        <form>
+            <div class="mb-3">
+              <label for="pid" class="form-label">Patient ID</label>
+              <input type="text" class="form-control" id="id" >
+             
+            </div>
+            <br>
+            <div class="mb-3">
+              <label for="psid" class="form-label">Prescription ID</label>
+              <input type="text" class="form-control" id="psid">
+            </div>
+            
+            <button type="button" id="sub" class="btn btn-primary">Get Prescription</button>
+          </form>
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+   
+
+
+    <script>
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+
+
+
+      
+  $('#sub').on('click', function() {
+    var pid=$('#pid').val();
+    var psid=$('#psid').val();
+    alert(pid, psid)
+    
+    if(pid == ""){
+      alert("Enter the Patient ID")
+    }
+    else {
+
+    
+
+    datamain=[]
+
+    var data = $('.item').map(function() {
+   
+      
+        item = {};
+        var id = $(this).find('[name="val1"]').val();
+        var qt= $(this).find('[name="val2"]').val();
+        var dose= $(this).find('[name="val3"]').val();
+        item['med'] = id;
+        item['qty'] = qt;
+        item['dose'] = dose;
+        datamain.push(item);
+    
+   
+});
+var jsonString = JSON.stringify(datamain);
+console.log(datamain);
+var csrf_token = getCookie('csrftoken');
+$.ajax(
+  {
+  type:"POST",
+  dataType: "json",
+  
+//   url: "{% url 'entry' %}",
+//   url: "{% url 'entry' %}",
+  
+  data:{
+      datamain : JSON.stringify(datamain),
+      patient : pid,
+      csrfmiddlewaretoken: csrf_token
+  },
+  success: function(data){
+      alert(data["success"])
+  },
+  error:function(response){
+  console.log(response)
+   alert(response.responseJSON.error);
+  }
+  }
+  )
+
+}
+
+  });
+
+
+    </script>
+
+
+
+
+
+  </body>
+</html>
+
+

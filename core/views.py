@@ -8,7 +8,7 @@ from .models import Doctor , Patient, Prescription, Medecine
 
 # Create your views here.
 def signin(request):
-    login_page_path = 'login.html'
+    login_page_path = 'login2.html'
 
     if request.user.is_authenticated:
         print("test1")
@@ -54,7 +54,7 @@ def signupd(request):
         address = data['add']
         clinic_name = data['cname']
         ddetail = data['ddetail']
-        edeatil = data['edetail']
+        # edeatil = data['ed']
 
         if password != password2:
             return render(request, register_doctor, {'msg': ["Passwords Don't match"]})
@@ -66,12 +66,14 @@ def signupd(request):
             user1 = User.objects.create(username = username, first_name = fname, last_name = lname, email = email, password = password)
             Doctor.objects.create(
                 user = user1,
-                edu_details = edeatil,
+                # edu_details = edeatil,
                 doc_details = ddetail,
                 Address = address,
                 contact = phone,
                 clinic_name = clinic_name,
+
                 )
+            user1.is_staff = True
             user1.save()
             auth.login(request, user1)
             return redirect('doctor_dashboard')
@@ -179,21 +181,69 @@ def patientd(request):
 def signout(request):
     try:
         logout(request)
-        return HttpResponse("logouted successfully")
+        return redirect('login')
     except:
        return HttpResponse("Need to Login First")
 
 
 def new(request):
-    return render(request, 'new_presc.html')
+    if request.user.is_authenticated and request.user.is_staff:
+        return render(request, 'new_presc.html')
+    return redirect('login')
 
+import json
 def entry(request):
+    if request.user.is_authenticated and request.user.is_staff:
+        if(request.method == 'POST'):
+            data = request.POST
+          
+            temp = (data['datamain'])
+            pid = data['patient']
+
+            
+            try:
+                p_obj = Patient.objects.get(patient_id = pid)
+                d_obj = Doctor.objects.get(user = request.user)
+                presc_obj = Prescription.objects.create(doctor_id=d_obj, patient_id = p_obj)
+                presc_obj.save()
+                json_obj = json.loads(temp)
+                for item in json_obj:
+                    med_it = Medecine.objects.create(prescription = presc_obj, med_name = item['med'], qty= item['qty'], dose=item['dose'])
+                    med_it.save()
+                return JsonResponse({"success": "Successfully Saved"},status=200)
+
+            except Exception as e:
+           
+                
+                return JsonResponse({"success": "Not Found Enter Correct Details"},status=200)
+            # pid = (data['patient'])
+            # print("PID is : ", pid)
+            
+            return JsonResponse({"success": "Milestone successfully created"},status=200)
+        return JsonResponse({"error": "Invalid Path"},status=403)  
+    return JsonResponse({"error": "Login to the system"},status=403)
+
+
+def pharma(request):
     if(request.method == 'POST'):
         data = request.POST
-        myd = request.POST.get('datamain')
-        
-        print(data['datamain'])
-        return JsonResponse({"success": "Milestone successfully created"},status=200)
-    return JsonResponse({"error": "get request"},status=200)
+        pid = (data['pid'])
+        psid = data['psid']
 
+        try:
+            p_obj = Patient.objects.get(patient_id=pid)
+            ps_obj = Prescription.objects.get(pk = psid)
+            if(ps_obj.patient_id == p_obj):
+                meditem = Medecine.objects.filter(prescription = ps_obj)
+                data={
+                    'p_obj' : ps_obj,
+                    'meditem' : meditem
+                }
+                return JsonResponse(data,status=200)
+            else:
+                return JsonResponse({"error": "Incorrect Details"},status=403)
+        except Exception as e:
+            return JsonResponse({"error": "Incorrect Details"},status=403)
+
+    return render(request, 'pharma_dash.html')
 

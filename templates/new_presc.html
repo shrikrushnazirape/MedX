@@ -15,6 +15,7 @@
     <title>Symptom Form</title>
   </head>
   <body>
+    {% include "navbar.html" %}
   {% if msg %}
     <div class="alert alert-success" role="alert">
       {{msg}}
@@ -58,13 +59,9 @@
                       <td><input type="text" id="qty" name='val2'></td>
                       <td><input type="text" id="dose" name='val3'></td>
                     </tr>
-                 
-
-                    
                   </tbody>
                 </table>
-   
-              <button type="button" id="sub" class="btn btn-primary" >Send to Doctor</button>
+              <button type="button" id="sub" class="btn btn-primary" > Prescribe</button>
             </form>
           </div>
         </div>
@@ -101,6 +98,8 @@ function getCookie(name) {
   });
 
 
+var val1 = -1;
+
 
   $(document).ready(function() {
  
@@ -113,6 +112,14 @@ function getCookie(name) {
 
 
   $('#sub').on('click', function() {
+    var pid=$('#pid').val();
+    
+    if(pid == ""){
+      alert("Enter the Patient ID")
+    }
+    else {
+
+    
 
     datamain=[]
 
@@ -136,11 +143,13 @@ var csrf_token = getCookie('csrftoken');
 $.ajax(
   {
   type:"POST",
+  dataType: "json",
   
   url: "{% url 'entry' %}",
   
   data:{
       datamain : JSON.stringify(datamain),
+      patient : pid,
       csrfmiddlewaretoken: csrf_token
   },
   success: function(data){
@@ -153,6 +162,7 @@ $.ajax(
   }
   )
 
+}
 
   });
 

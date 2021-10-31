@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+title {
+  color: rgb(128, 215, 250);
+}
+
+body {
+  overflow-x: hidden;
+}
+.card .card-body .form-container .form-group input {
+  margin-top: 30px;
+}
+.row {
+  justify-content: space-evenly;
+}
+.form-fluid {
+  /* width: 50vw; */
+  /* margin-top: 100px; */
+  z-index: 1;
+  /* margin-left: 15px; */
+
+  position: relative;
+  top: 0px;
+  left: 30px;
+  width: 50vw;
+  margin: 50px 0px 50px 0px;
+}
+.form-fluid .card {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 1.5vw;
+  background-color: rgb(238, 248, 248);
+}
+
+.img-fluid {
+  position: fixed;
+  width: 100%;
+  /* max-height: auto; */
+  /* bottom: 0px; */
+
+  z-index: -1;
+  object-fit: cover;
+}
+.img-fluid img {
+  float: right;
+  /* height: 100%; */
+}
+@media screen and (min-width: 320px) and (max-width: 426px) {
+  .form-fluid,
+  .img-fluid img {
+    width: 100%;
+  }
+  .form-fluid {
+    left: 0px;
+    top: 20px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .img-fluid img {
+    float: right;
+    width: 50vw;
+    /* height: 50vw; */
+  }
+  .form-fluid {
+    left: 0px;
+    top: 20px;
+  }
+}
+
+/* .card .card-body .form-container .form-group input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+  width: 100%;
+  margin-top: 40px;
+  padding-bottom: 5px;
+} */
+#login_submit_btn {
+  font-weight: 700;
+  margin-top: 20px;
+  color: #fff;
+}

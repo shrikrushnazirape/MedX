@@ -36,12 +36,12 @@ class Patient(models.Model):
     def getuuid(self):
         return self.patient_id
 
-
+import datetime
 class Prescription(models.Model):
     doctor_id = models.ForeignKey(Doctor, on_delete=CASCADE)
     patient_id = models.ForeignKey(Patient, on_delete=CASCADE)
     fees = models.IntegerField(blank=True, null=True)
-    date = models.DateField(blank=True, null= True)
+    date = models.DateField(blank=True, null= True, default=datetime.date.today())
     status = models.BooleanField(default=False);
 
 
