@@ -12,5 +12,6 @@ urlpatterns = [
     path('new/', views.new, name='new'),
     path('entry/', views.entry, name='entry'),
     path('pharma/', views.pharma, name='pharma'),
+    path('getpresc/', views.getPresc, name='getpresc'),
  
 ]

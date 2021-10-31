@@ -54,7 +54,7 @@ def signupd(request):
         address = data['add']
         clinic_name = data['cname']
         ddetail = data['ddetail']
-        # edeatil = data['ed']
+        edeatil = data['ed']
 
         if password != password2:
             return render(request, register_doctor, {'msg': ["Passwords Don't match"]})
@@ -66,7 +66,7 @@ def signupd(request):
             user1 = User.objects.create(username = username, first_name = fname, last_name = lname, email = email, password = password)
             Doctor.objects.create(
                 user = user1,
-                # edu_details = edeatil,
+                edu_details = edeatil,
                 doc_details = ddetail,
                 Address = address,
                 contact = phone,
@@ -225,25 +225,34 @@ def entry(request):
 
 
 def pharma(request):
+    temp = 'pharma_dash.html'
     if(request.method == 'POST'):
         data = request.POST
         pid = (data['pid'])
         psid = data['psid']
 
         try:
+            # return JsonResponse({"success": "Not Found Enter Correct Details"},status=200)
             p_obj = Patient.objects.get(patient_id=pid)
             ps_obj = Prescription.objects.get(pk = psid)
+           
             if(ps_obj.patient_id == p_obj):
                 meditem = Medecine.objects.filter(prescription = ps_obj)
-                data={
-                    'p_obj' : ps_obj,
-                    'meditem' : meditem
+                data = {
+                    'meditem':meditem,
+                    'p_obj':p_obj
                 }
-                return JsonResponse(data,status=200)
+                
+                return render(request, 'pharmalist.html', data)
             else:
-                return JsonResponse({"error": "Incorrect Details"},status=403)
+                return render(request, temp, {'msg': "incorrect Details"})
         except Exception as e:
-            return JsonResponse({"error": "Incorrect Details"},status=403)
-
+            print(e)
+            return render(request, temp, {'msg': "incorrect Details"})
     return render(request, 'pharma_dash.html')
 
+
+
+def getPresc(request):
+
+    return render(request, 'pharmalist.html')
